@@ -34,14 +34,14 @@ def groups(request, course_id):
 
 
 @login_required
-def group_detail(request, group_id, course_id):
+def group_detail(request, group_name, course_id):
     """Display a group."""
 
     course = get_course_by_id(course_id, depth=None)
 
     context = {
         'course': course,
-        'group': Group.objects.get(pk=group_id),
+        'group': JoinUs.group(group_name),
     }
 
     return render_to_response('joinus/group_detail.html', context)

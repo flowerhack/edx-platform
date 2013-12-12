@@ -361,7 +361,7 @@ if settings.COURSEWARE_ENABLED and settings.FEATURES.get('ENABLE_INSTRUCTOR_BETA
     urlpatterns += (
         url(r'^courses/(?P<course_id>[^/]+/[^/]+/[^/]+)/groups$',
             'joinus.views.groups', name="groups"),
-        url(r'^courses/(?P<course_id>[^/]+/[^/]+/[^/]+)/groups/(?P<group_id>[^/]+)$',
+        url(r'^courses/(?P<course_id>[^/]+/[^/]+/[^/]+)/groups/(?P<group_name>[^/]+)$',
             'joinus.views.group_detail', name="group_detail"),
     )
 
