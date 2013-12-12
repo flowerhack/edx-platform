@@ -46,9 +46,9 @@
     <section aria-label="Handout Navigation" class="handouts">
       <h1>Your Groups</h1>
         <ol>
-        % for group in groups:
+        % for joinus in groups:
          <li>
-          ${group}
+          ${joinus.group.name}
         % endfor
         </li>
         <hr></hr>

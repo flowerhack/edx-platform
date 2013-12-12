@@ -18,7 +18,7 @@ def groups(request, course_id):
 
     context = {
         'course': course,
-        'groups': request.user
+        'groups': request.user.joinus_set.all()
     }
     if request.POST:
         if request.POST.get('group_name'): # User wants to join an existing group
