@@ -12,16 +12,27 @@
 
 <%include file="/courseware/course_navigation.html" args="active_page='groups'" />
 
+<style type="text/css">
+table.member_table th, table.member_table td { padding-right: 30px; }
+</style>
+
 <section class="container">
   <div class="info-wrapper">
     <section class="updates">
       <h1>${ group }</h1>
 
-      <ul>
+      <h2>Group members</h2>
+      <table class="member_table">
+        <tbody>
       % for user in group.user_set.all():
-      <li><a href="#">${ user }</a></li>
+          <tr>
+            <td><a href="#">${ user }</a></td>
+            <td><a href="#">View Progress</a></td>
+            <td><a href="mailto:${ user.email }">${ user.email }</a></td>
+          </tr>
       % endfor
-      </ul>
+        </tbody>
+      </table>
     </section>
     <section aria-label="Handout Navigation" class="handouts">
       <h1>Your Groups</h1>
