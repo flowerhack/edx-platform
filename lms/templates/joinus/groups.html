@@ -23,24 +23,36 @@
       % else:
       <p>If you have an invitation code for a group, please enter it here:</p>
       <form action="" method="post">
-          <p><input type="text" name="invitation_code" /></p>
-          <p><input type="submit" /></p>
+          <p><input type="text" name="invitation_code" /> &nbsp;
+          <input type="submit" /></p>
           <input type="hidden" name="csrfmiddlewaretoken" value="${ csrf_token }" />
       </form>
       % endif
+      <p></p>
+      <h2>Create a new group</h2>
+      <p>
+      If you would like to create a new group, e.g. for a class or a study group, you can enter its name here:</p>
+      <form action="" method="post">
+        <p><input type="text" name="new_group" /> &nbsp;
+        <input type="submit" /></p>
+        <input type="hidden" name="csrfmiddlewaretoken" value="${ csrf_token }" />
+        </p>
+      </form>
     </section>
+    <p></p>
+ 
+
+
     <section aria-label="Handout Navigation" class="handouts">
       <h1>Your Groups</h1>
         <ol>
-       
         % for group in groups:
          <li>
           ${group}
         % endfor
         </li>
         <hr></hr>
-        
-        </ul>
+        </ol>
     </section>
   </div>
 </section>
