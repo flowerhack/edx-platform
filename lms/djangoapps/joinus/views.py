@@ -18,7 +18,7 @@ def groups(request, course_id):
 
     context = {
         'course': course,
-        'groups': JoinUs.objects.filter(members__user__contains=request.user)
+        'groups': request.user
     }
     if request.POST:
         if request.POST.get('group_name'): # User wants to join an existing group
