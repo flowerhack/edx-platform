@@ -13,17 +13,19 @@ def groups(request, course_id):
 
     course = get_course_by_id(course_id, depth=None)
 
+    context = {
+        'course': course,
+        'groups': request.user.groups.filter(name__startswith='joinus')
+    }
     if request.POST:
-        g = JoinUs.join_joinus_group(request.user, request.POST['group_name'])
-        context = {
-            'course': course,
-            'group_name': request.POST['group_name'],
-        }
-    else:
-        context = {
-            'course': course,
-        }
-    context['groups']= request.user.groups.filter(name__startswith='joinus')
+        if request.POST.get('group_name'): # User wants to join an existing group
+            g = JoinUs.join_joinus_group(request.user, request.POST['group_name'])
+            context['group_name'] = request.POST['group_name']
+        elif request.POST.get('new_group'): # User wants to create a new group
+            g = JoinUs.create_joinus_group(request.user, request.POST['new_group'])
+            context['group'] = g
+    else: # Just display the regular page
+        pass
 
     return render_to_response('joinus/groups.html', context)
 
@@ -43,7 +45,7 @@ def group_create(request, group_id, course_id):
     """Create a group."""
 
     course = get_course_by_id(course_id, depth=None)
-    #group = JoinUs.
+    group = JoinUs.create_joinus_group(request.user, request.POST['new_group'])
 
     context = {
         'course': course,
