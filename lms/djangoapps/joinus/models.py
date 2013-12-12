@@ -1,14 +1,11 @@
 from django.contrib.auth.models import Group
+from django.db import models
+from django.contrib.auth.decorators import permission_required
 
 class JoinUs(models.Model):
 	"""
 	Models a user-created study group.
 	"""
-	name = models.CharField()
-	members = models.ForeignKey(User, db_index=True)
-	invite_code = models.CharField()
-	# todo probably we want to do this with role/access control instead
-	leader = models.ForeignKey(User, db_index=True)
 	JOINUS_GROUP_PREFIX = "joinus_"
 
 	@classmethod
