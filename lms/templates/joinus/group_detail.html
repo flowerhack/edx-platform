@@ -27,8 +27,18 @@ table.member_table th, table.member_table td { padding-right: 30px; }
         <tbody>
       % for user in group.user_set.all():
           <tr>
-            <td><a href="#">${ user }</a></td>
-            <td><a href="${reverse('student_progress', kwargs={'course_id': course.id, 'student_id': user.id})}">View Progress</a></td>
+            <td>
+          % if user in group.leaders.all():
+            <a href="#">${ user }</a> (*)
+          % else:
+            <a href="#">${ user }</a>
+          % endif
+            </td>
+            <td>
+          % if request.user not in group.leaders.all():
+            <a href="${reverse('student_progress', kwargs={'course_id': course.id, 'student_id': user.id})}">View Progress</a>
+          % endif
+            </td>
             <td><a href="mailto:${ user.email }">${ user.email }</a></td>
           </tr>
       % endfor
