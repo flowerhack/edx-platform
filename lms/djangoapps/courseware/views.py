@@ -618,6 +618,11 @@ def _progress(request, course_id, student_id):
     """
     course = get_course_with_access(request.user, course_id, 'load', depth=None)
 
+    try:
+        student_id = int(student_id)
+    except TypeError:
+        student_id = None
+
     if student_id is None or student_id == request.user.id:
         # always allowed to see your own profile
         student = request.user
