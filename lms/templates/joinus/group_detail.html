@@ -35,7 +35,7 @@ table.member_table th, table.member_table td { padding-right: 30px; }
           % endif
             </td>
             <td>
-          % if request.user not in group.leaders.all():
+          % if request.user in group.leaders.all():
             <a href="${reverse('student_progress', kwargs={'course_id': course.id, 'student_id': user.id})}">View Progress</a>
           % endif
             </td>
