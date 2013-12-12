@@ -10,7 +10,7 @@ class JoinUs(models.Model):
     """
     name = models.CharField(unique=True, max_length=255)
     members = models.OneToOneField(Group)
-    leaders = models.ManyToManyField(User, null=True)
+    leaders = models.ManyToManyField(User)
 
     @classmethod
     def group_name(cls, name):

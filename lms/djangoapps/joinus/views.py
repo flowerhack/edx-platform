@@ -25,7 +25,7 @@ def groups(request, course_id):
             g = JoinUs.join_joinus_group(request.user, request.POST['group_name'])
             context['group_name'] = request.POST['group_name']
         elif request.POST.get('new_group'): # User wants to create a new group
-            g = JoinUs.create_joinus_group(request.user, request.POST['new_group'])
+            g = JoinUs.create_joinus_group(user=request.user, gname=request.POST['new_group'])
             context['group'] = g
     else: # Just display the regular page
         pass
@@ -42,21 +42,6 @@ def group_detail(request, group_id, course_id):
     context = {
         'course': course,
         'group': Group.objects.get(pk=group_id),
-    }
-
-    return render_to_response('joinus/group_detail.html', context)
-
-
-@login_required
-def group_create(request, group_id, course_id):
-    """Create a group."""
-
-    course = get_course_by_id(course_id, depth=None)
-    group = JoinUs.create_joinus_group(request.user, request.POST['new_group'])
-
-    context = {
-        'course': course,
-        'group': group,
     }
 
     return render_to_response('joinus/group_detail.html', context)
