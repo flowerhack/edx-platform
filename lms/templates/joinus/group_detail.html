@@ -1,3 +1,4 @@
+<%! from django.core.urlresolvers import reverse %>
 <%! from django.utils.translation import ugettext as _ %>
 <%inherit file="/main.html" />
 <%block name="bodyclass">${course.css_class}</%block>
@@ -19,7 +20,7 @@ table.member_table th, table.member_table td { padding-right: 30px; }
 <section class="container">
   <div class="info-wrapper">
     <section class="updates">
-      <h1>${ group }</h1>
+      <h1>${ group.display_name }</h1>
 
       <h2>Group members</h2>
       <table class="member_table">
@@ -36,6 +37,14 @@ table.member_table th, table.member_table td { padding-right: 30px; }
     </section>
     <section aria-label="Handout Navigation" class="handouts">
       <h1>Your Groups</h1>
+        <ol>
+        % for joinus in group_list:
+         <li>
+          <a href="${reverse('group_detail', kwargs={'course_id': course.id, 'group_name': joinus.display_name})}">${joinus.display_name}</a>
+        </li>
+        % endfor
+        <hr></hr>
+        </ol>
     </section>
   </div>
 </section>
