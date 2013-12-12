@@ -20,7 +20,7 @@ def groups(request, course_id):
         context = {
             'course': course,
         }
-    context['groups']=['UQ class: John Z instructor', 'My study group']
+    context['groups']= request.user.groups.filter(name__startswith='joinus')
 
     return render_to_response('joinus/groups.html', context)
 
