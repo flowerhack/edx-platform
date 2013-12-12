@@ -28,7 +28,7 @@ table.member_table th, table.member_table td { padding-right: 30px; }
       % for user in group.user_set.all():
           <tr>
             <td><a href="#">${ user }</a></td>
-            <td><a href="#">View Progress</a></td>
+            <td><a href="${reverse('student_progress', kwargs={'course_id': course.id, 'student_id': user.id})}">View Progress</a></td>
             <td><a href="mailto:${ user.email }">${ user.email }</a></td>
           </tr>
       % endfor

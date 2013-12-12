@@ -60,5 +60,6 @@ class JoinUs(Group):
         joinus_group.leaders.add(user)
 
     @classmethod
-    def is_student_led_by(student, leader):
-        return JoinUs.objects.filter(user__contains=student_id, leaders__contains=request.user).exists()
+    def is_student_led_by(cls, student, leader):
+        # TODO fix plurals
+        return JoinUs.objects.filter(user=student, leaders=leader).exists()
