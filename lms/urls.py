@@ -361,6 +361,8 @@ if settings.COURSEWARE_ENABLED and settings.FEATURES.get('ENABLE_INSTRUCTOR_BETA
     urlpatterns += (
         url(r'^courses/(?P<course_id>[^/]+/[^/]+/[^/]+)/groups$',
             'joinus.views.groups', name="groups"),
+        url(r'^courses/(?P<course_id>[^/]+/[^/]+/[^/]+)/groups/(?P<group_id>[^/]+)$',
+            'joinus.views.group_detail', name="group_detail"),
     )
 
 if settings.DEBUG or settings.FEATURES.get('ENABLE_DJANGO_ADMIN_SITE'):
