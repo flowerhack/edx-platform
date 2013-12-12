@@ -1,3 +1,4 @@
+from django.db.models import Q
 from django.shortcuts import get_object_or_404, render
 from django.http import HttpResponseRedirect, HttpResponse
 from django.core.urlresolvers import reverse
@@ -18,7 +19,7 @@ def groups(request, course_id):
 
     context = {
         'course': course,
-        'groups': request.user.joinus_set.all()
+        'groups': JoinUs.objects.filter(Q(user=request.user) | Q(leaders=request.user))
     }
     if request.POST:
         if request.POST.get('group_name'): # User wants to join an existing group
