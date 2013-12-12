@@ -57,7 +57,7 @@ class JoinUs(models.Model):
             name=cls.group_name(gname)
         )
         joinus_group.save()
-        joinus_group.leaders.add(leaders=[user])
+        joinus_group.leaders.add(user)
 
     @classmethod
     def is_student_led_by(student, leader):
