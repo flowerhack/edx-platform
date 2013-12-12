@@ -56,6 +56,7 @@ class JoinUs(Group):
             name=cls.group_name(gname)
         )
         joinus_group.save()
+        joinus_group.user_set.add(user)
         joinus_group.leaders.add(user)
 
     @classmethod
