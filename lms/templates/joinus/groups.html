@@ -48,12 +48,17 @@
       <h1>Your Groups</h1>
         <ol>
         % for joinus in groups:
-         <li>
-          <a href="${reverse('group_detail', kwargs={'course_id': course.id, 'group_name': joinus.display_name})}">${joinus.display_name}</a>
+          <li>
+            <span>
+              <a href="${reverse('group_detail', kwargs={'course_id': course.id, 'group_name': joinus.display_name})}">${joinus.display_name}</a>
+            </span>
+            % if joinus in leader_of:
+            <span>(*)</span>
+            % endif
+          </li>
         % endfor
-        </li>
-        <hr></hr>
         </ol>
+        <hr></hr>
     </section>
   </div>
 </section>
