@@ -620,7 +620,7 @@ def _progress(request, course_id, student_id):
 
     try:
         student_id = int(student_id)
-    except TypeError:
+    except ValueError:
         student_id = None
 
     if student_id is None or student_id == request.user.id:
