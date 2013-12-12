@@ -617,13 +617,14 @@ def _progress(request, course_id, student_id):
     Course staff are allowed to see the progress of students in their class.
     """
     course = get_course_with_access(request.user, course_id, 'load', depth=None)
-    staff_access = has_access(request.user, course, 'staff')
 
     if student_id is None or student_id == request.user.id:
         # always allowed to see your own profile
         student = request.user
+        staff_access = False
     else:
         # Requesting access to a different student's profile
+        staff_access = has_access(request.user, course, 'staff')
         student = User.objects.get(id=int(student_id))
         leader_access = JoinUs.is_student_led_by(student, request.user)
         if not (staff_access or leader_access):

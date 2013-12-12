@@ -43,7 +43,8 @@ def group_detail(request, group_name, course_id):
     context = {
         'course': course,
         'group': JoinUs.group(group_name),
-        'group_list': request.user.joinus_set.all(),
+        'groups': JoinUs.objects.filter(user=request.user),
+        'leader_of': JoinUs.objects.filter(leaders=request.user),
     }
 
     return render_to_response('joinus/group_detail.html', context)
