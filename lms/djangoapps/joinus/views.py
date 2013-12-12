@@ -3,6 +3,8 @@ from django.http import HttpResponseRedirect, HttpResponse
 from django.core.urlresolvers import reverse
 from django.contrib.auth.models import Group
 
+from joinus.models import JoinUs
+
 from courseware.courses import get_course_by_id
 from edxmako.shortcuts import render_to_response
 
@@ -12,9 +14,10 @@ def groups(request, course_id):
     course = get_course_by_id(course_id, depth=None)
 
     if request.POST:
+        g = JoinUs.join_joinus_group(request.user, request.POST['group_name'])
         context = {
             'course': course,
-            'invitation_code': request.POST['invitation_code'],
+            'group_name': request.POST['group_name'],
         }
     else:
         context = {
@@ -32,6 +35,19 @@ def group_detail(request, group_id, course_id):
     context = {
         'course': course,
         'group': Group.objects.get(pk=group_id),
+    }
+    
+    return render_to_response('joinus/group_detail.html', context)
+
+def group_create(request, group_id, course_id):
+    """Create a group."""
+
+    course = get_course_by_id(course_id, depth=None)
+    #group = JoinUs.
+
+    context = {
+        'course': course,
+        'group': group,
     }
     
     return render_to_response('joinus/group_detail.html', context)

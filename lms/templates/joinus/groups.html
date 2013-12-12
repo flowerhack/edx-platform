@@ -21,9 +21,9 @@
       % if invitation_code:
       <p>Received <em>${invitation_code}</em></p>
       % else:
-      <p>If you have an invitation code for a group, please enter it here:</p>
+      <p>Enter the name of the group you'd like to join:</p>
       <form action="" method="post">
-          <p><input type="text" name="invitation_code" /> &nbsp;
+          <p><input type="text" name="group_name" /> &nbsp;
           <input type="submit" /></p>
           <input type="hidden" name="csrfmiddlewaretoken" value="${ csrf_token }" />
       </form>

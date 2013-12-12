@@ -951,6 +951,7 @@ INSTALLED_APPS = (
     'licenses',
     'course_groups',
     'bulk_email',
+    'joinus',
 
     # External auth (OpenID, shib)
     'external_auth',
