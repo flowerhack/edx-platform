@@ -50,11 +50,11 @@ class JoinUs(models.Model):
     def create_joinus_group(cls, user, gname):
         # creates a new group led by user with name
         # TODO check that name is valid, not taken, etc
-        group = Group.create(users=[user])
+        group = Group()
         group.save()
         joinus_group = cls(
             members=group,
-            leaders=[user],
             name=cls.group_name(gname)
         )
         joinus_group.save()
+        joinus_group.leaders.add(leaders=[user])
