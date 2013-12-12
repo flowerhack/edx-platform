@@ -35,16 +35,23 @@ table.member_table th, table.member_table td { padding-right: 30px; }
         </tbody>
       </table>
     </section>
-    <section aria-label="Handout Navigation" class="handouts">
+
+    <section aria-label="Group List" class="groups">
       <h1>Your Groups</h1>
         <ol>
-        % for joinus in group_list:
-         <li>
-          <a href="${reverse('group_detail', kwargs={'course_id': course.id, 'group_name': joinus.display_name})}">${joinus.display_name}</a>
-        </li>
+        % for joinus in groups:
+          <li>
+            <a href="${reverse('group_detail', kwargs={'course_id': course.id, 'group_name': joinus.display_name})}">
+              ${joinus.display_name}
+            % if joinus in leader_of:
+              <span>(*)</span>
+            % endif
+            </a>
+          </li>
         % endfor
-        <hr></hr>
         </ol>
+        <hr></hr>
+        <p><span>(*)</span> indicates groups you lead</p>
     </section>
   </div>
 </section>
