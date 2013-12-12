@@ -53,5 +53,6 @@ class JoinUs(models.Model):
 		gname = JOINUS_GROUP_PREFIX + gname
 		group = Group()
 		joinus_group = cls.objects.create(members=group, leader=user, name=gname)
+        joinus_group.user_set.add(user)
 		joinus_group.save()
 		return
