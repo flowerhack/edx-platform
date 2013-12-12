@@ -18,7 +18,7 @@ class JoinUs(models.Model):
 
     @classmethod
     def group(cls, name):
-        return JoinUs.objects.get(name=cls.group_name(name))
+        return JoinUs.objects.get(name=name)
 
     @classmethod
     def join_joinus_group(cls, user, gname):
