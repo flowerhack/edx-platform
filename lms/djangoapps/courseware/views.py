@@ -27,6 +27,7 @@ from courseware.model_data import FieldDataCache
 from .module_render import toc_for_course, get_module_for_descriptor, get_module
 from courseware.models import StudentModule, StudentModuleHistory
 from course_modes.models import CourseMode
+from joinus.models import JoinUs
 
 from student.models import UserTestGroup, CourseEnrollment
 from util.cache import cache, cache_if_anonymous
@@ -623,9 +624,10 @@ def _progress(request, course_id, student_id):
         student = request.user
     else:
         # Requesting access to a different student's profile
-        if not staff_access:
-            raise Http404
         student = User.objects.get(id=int(student_id))
+        leader_access = JoinUs.is_student_led_by(student, request.user)
+        if not (staff_access or leader_access):
+            raise Http404
 
     # NOTE: To make sure impersonation by instructor works, use
     # student instead of request.user in the rest of the function.

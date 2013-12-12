@@ -58,3 +58,7 @@ class JoinUs(models.Model):
         )
         joinus_group.save()
         joinus_group.leaders.add(leaders=[user])
+
+    @classmethod
+    def is_student_led_by(student, leader):
+        JoinUs.objects.filter(members__user__contains=student_id, leaders__contains=request.user).exists()
