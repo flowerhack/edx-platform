@@ -10,17 +10,25 @@ class Migration(SchemaMigration):
     def forwards(self, orm):
         # Adding model 'JoinUs'
         db.create_table('joinus_joinus', (
-            ('id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
-            ('name', self.gf('django.db.models.fields.CharField')(max_length=255)),
-            ('members', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['auth.Group'])),
-            ('leader', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['auth.User'])),
+            ('group_ptr', self.gf('django.db.models.fields.related.OneToOneField')(to=orm['auth.Group'], unique=True, primary_key=True)),
         ))
         db.send_create_signal('joinus', ['JoinUs'])
+
+        # Adding M2M table for field leaders on 'JoinUs'
+        db.create_table('joinus_joinus_leaders', (
+            ('id', models.AutoField(verbose_name='ID', primary_key=True, auto_created=True)),
+            ('joinus', models.ForeignKey(orm['joinus.joinus'], null=False)),
+            ('user', models.ForeignKey(orm['auth.user'], null=False))
+        ))
+        db.create_unique('joinus_joinus_leaders', ['joinus_id', 'user_id'])
 
 
     def backwards(self, orm):
         # Deleting model 'JoinUs'
         db.delete_table('joinus_joinus')
+
+        # Removing M2M table for field leaders on 'JoinUs'
+        db.delete_table('joinus_joinus_leaders')
 
 
     models = {
@@ -61,11 +69,9 @@ class Migration(SchemaMigration):
             'name': ('django.db.models.fields.CharField', [], {'max_length': '100'})
         },
         'joinus.joinus': {
-            'Meta': {'object_name': 'JoinUs'},
-            'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
-            'leader': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['auth.User']"}),
-            'members': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['auth.Group']"}),
-            'name': ('django.db.models.fields.CharField', [], {'max_length': '255'})
+            'Meta': {'object_name': 'JoinUs', '_ormbases': ['auth.Group']},
+            'group_ptr': ('django.db.models.fields.related.OneToOneField', [], {'to': "orm['auth.Group']", 'unique': 'True', 'primary_key': 'True'}),
+            'leaders': ('django.db.models.fields.related.ManyToManyField', [], {'to': "orm['auth.User']", 'symmetrical': 'False'})
         }
     }
 
