@@ -7,6 +7,7 @@ class JoinUs(models.Model):
 	Models a user-created study group.
 	"""
 	JOINUS_GROUP_PREFIX = "joinus_"
+	name = models.CharField()
 	members = models.ForeignKey(Groups)
 	leader = models.ForeignKey(User)
 
@@ -14,8 +15,9 @@ class JoinUs(models.Model):
 	def join_joinus_group(cls, user, gname):
 		""" Adds user to the JoinUs Group with name gname. """
 		gname = JOINUS_GROUP_PREFIX + gname
-		group = JoinUs.group.objects.get(name='gname')
-		group.user_set.add(user)
+		joinus_group = cls.objects.get(name='gname')
+		joinus_group.members.user_set.add(user)
+		joinus_group.save()
 		return
 
 	# Invite codes are future TODO; not in scope for datajam
@@ -33,8 +35,9 @@ class JoinUs(models.Model):
 		If that user is the group leader, this also deletes the group.
 		"""
 		gname = JOINUS_GROUP_PREFIX + gname
-		group = JoinUs.group.objects.get(name='gname')
-		group.user_set.remove(user)
+		joinus_group.cls.objects.get(name='gname')
+		joinus_group.members.user_set.remove(user)
+		joinus_group.save()
 		# TODO if user is group leader, delete group
 		return
 
@@ -47,7 +50,7 @@ class JoinUs(models.Model):
 		# creates a new group led by user with name
 		# TODO check that name is valid, not taken, etc
 		gname = JOINUS_GROUP_PREFIX + gname
-		group = Group(name=gname)
-		joinus_group = cls.objects.create(members=group, leader=user)
+		group = Group()
+		joinus_group = cls.objects.create(members=group, leader=user, name=gname)
 		joinus_group.save()
 		return
